@@ -1,0 +1,232 @@
+:root {
+    --navyBlue: #283e4f;
+    --offWhite: #F7F7F7
+}
+
+.whiteNavy {
+    color: #fff!important;
+    background-color: var(--offWhite);
+}
+
+html, body {
+    font-family: Verdana,sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+body {
+    margin: 0;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.top {
+    top: 0;
+}
+
+.top, .bottom {
+    position: fixed;
+    width: 100%;
+}
+
+.bar {
+    width: 100%;
+    overflow: hidden;
+}
+
+.smallText {
+    font-size: 12px;
+}
+
+.center {
+    text-align: center;
+}
+
+.bar.whiteNavy.center.smallText {
+    background-color: #283e4f;
+    padding: 10px
+}
+
+.bar .button {
+    white-space: normal;
+}
+
+.w3-btn, .button {
+    border: none;
+    padding: 8px 16px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.container {
+    padding: 32px 16px 32px 16px;
+}
+
+.center {
+    text-align: center;
+}
+
+
+.largeText {
+    color: var(--navyBlue);
+    font-size: 30px;
+}
+
+.navyText {
+    color: var(--navyBlue);
+}
+
+.mainImage {
+    max-width: 100%;
+    height: auto;
+}
+
+h2 {
+    color: var(--navyBlue);
+    text-align: center;
+    font-family: system-ui;
+    padding: 50px 10px 10px 10px;
+    margin:0px;
+}
+
+
+/*CSS for Recipe Page*/
+.recipeHeader {
+    color: var(--navyBlue);
+    text-align: center;
+    font-family: system-ui;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.recipeSubHeader {
+    margin: 10px;
+}
+
+.recipeSection {
+    border: solid 2px;
+    margin: 10px;
+    padding: 10px;
+    background-color: white;
+}
+
+.contributorSection {
+    padding-left: 10px;
+}
+
+
+/*For Add a Recipe Page */
+.addForm {
+    text-align: center;
+    border: solid 1px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: white;
+}
+
+.innerForm {
+    text-align: left;
+}
+
+.addForm input, .addForm select, .addForm textarea {
+    width: 98%;
+    padding: 0px;
+    padding-left: 2%;
+    font-size: 18px;
+}
+
+.addForm textarea {
+    min-height: 100px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.addForm input {
+    height: 25px;
+}
+
+.addForm select {
+    height: 25px;
+}
+
+.addForm button {
+    height: 25px;
+    width: 50px;
+    background-color: var(--navyBlue);
+    border-radius: 8px;
+    color: white;
+    text-align: center;;
+}
+
+.addForm button:disabled {
+    background-color: #dddddd;
+    color: #d68c8c;
+}
+
+.recipeTitle>a {
+    text-decoration: none;
+    color: var(--navyBlue);
+}
+
+.recipeSection div {
+    padding-left: 10px;
+    text-indent: -10px;
+}
+
+.loader {
+    border: 16px solid #2d455766;
+    border-radius: 50%;
+    border-top: 16px solid var(--navyBlue);
+    width: 80px;
+    height: 80px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+.error {
+    color: red !important;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.recipeTitle {
+    font-size: 20px;
+    padding: 5px 10px 5px 10px;
+}
+
+.allRecipes a, .allRecipes a:visited {
+    color: var(--navyBlue);
+    text-decoration: none;
+}
+
+.sectionHeader {
+    margin: 10px;
+    font-size: 25px;
+    border-bottom: solid 1px;
+}
+
+.buttonContainer {
+    text-align: right;
+}
+
+html {
+    background-color: var(--offWhite);
+}
