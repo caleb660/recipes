@@ -1,22 +1,36 @@
 import '../styling/main.css';
 import React, { useState, useEffect } from 'react';
 import Toolbar from './toolbar'
-import { accessSpreadsheet } from './allRecipes';
+import {useDispatch, useSelector} from "react-redux";
+import {setRecipes} from "../redux/recipeSlice";
+import {accessSpreadsheet} from "./getRecipes";
 
 const Recipe = () => {
     const [recipe, setRecipe] = useState({});
+    const recipes = useSelector((state) => state.recipes);
+    const dispatch = useDispatch();
 
     useEffect (() => {
         let values = window.location.pathname.split('/');
         let recipeId = values[values.length -1];
         async function fetchData() {
             const recipes = await accessSpreadsheet();
-            let recipe = recipes[recipeId];
-            recipe.ingredients = addBreaks(recipe.ingredients);
-            recipe.directions = addBreaks(recipe.directions);
-            setRecipe(recipe);
+            dispatch(setRecipes(recipes));
+            console.log("the recipe is", recipes, recipeId);
+            let tempRecipe = structuredClone(recipes.at(recipeId));
+            tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);
+            tempRecipe.directions = addBreaks(tempRecipe.directions);
+            setRecipe(tempRecipe);
         }
-        fetchData();
+
+        if (recipes.recipesCaleb?.length === 0) {
+            fetchData();
+        } else {
+            let tempRecipe = structuredClone(recipes.recipesCaleb[recipeId]);
+            tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);
+            tempRecipe.directions = addBreaks(tempRecipe.directions);
+            setRecipe(tempRecipe);
+        }
     }, []);
 
     const addBreaks = (string) => {
@@ -38,6 +52,7 @@ const Recipe = () => {
     }
 
     const getRecipeOrLoader = () => {
+        console.log("recipe is: ", recipe);
         if (!recipe) {
             return (
                 <h1 className="recipeHeader error">
@@ -70,13 +85,7 @@ const Recipe = () => {
                     </div>
                 </div>);
         } else {
-            return(
-                <div>
-                    <br />
-                    <br />
-                    <div className="loader"></div>
-                </div>
-            );
+            return <div className="centerBlock"><div className="loader"></div></div>;
         }
     }
 

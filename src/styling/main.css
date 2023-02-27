@@ -97,7 +97,6 @@ h2 {
     margin:0px;
 }
 
-
 /*CSS for Recipe Page*/
 .recipeHeader {
     color: var(--navyBlue);
@@ -189,7 +188,13 @@ h2 {
     width: 80px;
     height: 80px;
     animation: spin 1s linear infinite;
-    margin: 0 auto;
+}
+
+.centerBlock {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin: -50px 0 0 -50px;
 }
 
 .error {
@@ -220,7 +225,13 @@ h2 {
 .sectionHeader {
     margin: 10px;
     font-size: 25px;
-    border-bottom: solid 1px;
+    border-bottom: solid black 1px;
+    color: #05b6d3;
+    text-shadow: 0 0 1px #957108;
+}
+
+.spacing {
+    padding-bottom: 50px;
 }
 
 .buttonContainer {
