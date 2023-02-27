@@ -31,7 +31,7 @@ const Recipe = () => {
             tempRecipe.directions = addBreaks(tempRecipe.directions);
             setRecipe(tempRecipe);
         }
-    }, []);
+    }, [dispatch, recipes.recipesCaleb]);
 
     const addBreaks = (string) => {
         string = string + "";

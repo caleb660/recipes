@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import '../styling/main.css';
@@ -9,7 +9,6 @@ import {accessSpreadsheet} from "./getRecipes";
 
 const AllRecipes = () => {
 
-    // const [recipes, setRecipes] = useState([]);
     const recipes = useSelector((state) => state.recipes);
     const dispatch = useDispatch();
 
@@ -24,7 +23,7 @@ const AllRecipes = () => {
         if (recipes.recipesCaleb?.length === 0) {
             fetchData();
         }
-    }, []);
+    }, [dispatch, recipes]);
 
     const arrangeRecipes = (header, arr) => {
         if (arr !== undefined && arr.length !== 0) {
