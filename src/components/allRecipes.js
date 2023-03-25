@@ -8,7 +8,6 @@ import { setRecipes } from '../redux/recipeSlice';
 import {accessSpreadsheet} from "./getRecipes";
 
 const AllRecipes = () => {
-
     const recipes = useSelector((state) => state.recipes);
     const dispatch = useDispatch();
 
