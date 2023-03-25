@@ -1,28 +1,12 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import {Link} from 'react-router-dom';
 
 import '../styling/main.css';
 import Toolbar from './toolbar';
-import {useDispatch, useSelector} from "react-redux";
-import { setRecipes } from '../redux/recipeSlice';
-import {accessSpreadsheet} from "./getRecipes";
+import {useSelector} from "react-redux";
 
 const AllRecipes = () => {
     const recipes = useSelector((state) => state.recipes);
-    const dispatch = useDispatch();
-
-    useEffect (() => {
-        console.log("recipes2 on load is " + recipes);
-        async function fetchData() {
-            console.log("starting fetchData inside useEffect");
-            const recipeList = await accessSpreadsheet();
-            console.log(recipeList);
-            dispatch(setRecipes(recipeList));
-        }
-        if (recipes.recipesCaleb?.length === 0) {
-            fetchData();
-        }
-    }, [dispatch, recipes]);
 
     const arrangeRecipes = (header, arr) => {
         if (arr !== undefined && arr.length !== 0) {
@@ -42,7 +26,6 @@ const AllRecipes = () => {
     }
 
     const getAllRecipes = () => {
-        console.log("recipes 2 is actually: " + recipes.recipesCaleb);
         if (recipes.recipesCaleb.length !== 0) {
             return (
                 <div className="allRecipes">
@@ -56,14 +39,16 @@ const AllRecipes = () => {
                 </div>
             );
         } else {
-            return <div className="centerBlock"><div className="loader"></div></div>;
+            return <div className="centerBlock">
+                <div className="loader"></div>
+            </div>;
         }
     }
 
     return (
         <div>
             <div className={'spacing'}/>
-            <Toolbar />
+            <Toolbar/>
             {getAllRecipes()}
         </div>
     );

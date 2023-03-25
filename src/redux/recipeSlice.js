@@ -6,9 +6,6 @@ export const recipeSlice = createSlice({
     initialState,
     reducers: {
         setRecipes: (state, action) => {
-            console.log("we are inside setRecipes", state);
-            console.log("we are inside setRecipes", state.value);
-            console.log("recipeList is ", action);
             state.recipesCaleb = action.payload;
             state.recipesLoaded = true;
         },

@@ -1,12 +1,12 @@
-import { Navigate } from "react-router-dom";
-import {AuthProvider, useAuth} from "./auth";
+import {Navigate, useParams} from "react-router-dom";
 
-export const ProtectedRoute = ({isLoggedIn, children }) => {
-    // const user  = useAuth();
-    console.log("the user is", isLoggedIn);
+export const ProtectedRoute = ({isLoggedIn, path, children}) => {
+    const {id} = useParams();
     if (!isLoggedIn) {
         // user is not authenticated
-        return <Navigate to="/login" />;
+        const pathParam = !path && !id ? '' : '?pathName=' + (path ? path : id);
+        let pathName = `/login${pathParam}`;
+        return <Navigate to={pathName}/>;
     }
     return children;
 };

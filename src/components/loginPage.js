@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import Toolbar from "./toolbar";
@@ -16,6 +16,8 @@ const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 
 const LoginPage = () => {
     const navigate = useNavigate();
+    const params = useParams();
+    let [searchParams, setSearchParams] = useSearchParams();
     const recipes = useSelector((state) => state.recipes);
     const [isLoggedIn, setLoggedIn] = useState(false);
     const [isGAPIInited, setGAPIInited] = useState(false);
@@ -141,7 +143,14 @@ const LoginPage = () => {
             })
         }
         dispatch(setRecipes(recipeArr));
+        navigateToIntendedPage();
     };
+
+    const navigateToIntendedPage = () => {
+        const pathName = searchParams.get("pathName");
+        const navigatePath = "/recipes" + (pathName ? "/" + pathName : "");
+        navigate(navigatePath);
+    }
 
     return (
         <div>

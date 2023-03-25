@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 const API_PATH = '/add_recipe.php';
-//const API_PATH = 'http://localhost/php-react/add_recipe.php';
 
 export default (async function showResults(values) {
     axios({

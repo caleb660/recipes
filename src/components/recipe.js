@@ -1,37 +1,20 @@
 import '../styling/main.css';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Toolbar from './toolbar'
-import {useDispatch, useSelector} from "react-redux";
-import {setRecipes} from "../redux/recipeSlice";
-import {accessSpreadsheet} from "./getRecipes";
+import {useSelector} from "react-redux";
 
 const Recipe = () => {
     const [recipe, setRecipe] = useState({});
     const recipes = useSelector((state) => state.recipes);
-    const dispatch = useDispatch();
 
-    useEffect (() => {
-        let values = window.location.pathname.split('/');
-        let recipeId = values[values.length -1];
-        async function fetchData() {
-            const recipes = await accessSpreadsheet();
-            dispatch(setRecipes(recipes));
-            console.log("the recipe is", recipes, recipeId);
-            let tempRecipe = structuredClone(recipes.at(recipeId));
-            tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);
-            tempRecipe.directions = addBreaks(tempRecipe.directions);
-            setRecipe(tempRecipe);
-        }
-
-        if (recipes.recipesCaleb?.length === 0) {
-            fetchData();
-        } else {
-            let tempRecipe = structuredClone(recipes.recipesCaleb[recipeId]);
-            tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);
-            tempRecipe.directions = addBreaks(tempRecipe.directions);
-            setRecipe(tempRecipe);
-        }
-    }, [dispatch, recipes.recipesCaleb]);
+    useEffect(() => {
+        let urlParts = window.location.pathname.split('/');
+        let recipeId = urlParts[urlParts.length - 1];
+        let tempRecipe = structuredClone(recipes.recipesCaleb[recipeId]);
+        tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);
+        tempRecipe.directions = addBreaks(tempRecipe.directions);
+        setRecipe(tempRecipe);
+    }, [recipes.recipesCaleb]);
 
     const addBreaks = (string) => {
         string = string + "";
@@ -40,12 +23,12 @@ const Recipe = () => {
 
     const getBrokenString = (arr) => {
         console.log(arr);
-        if(arr !== undefined) {
+        if (arr !== undefined) {
             return (
                 arr.map(value =>
                     <div key={value}>
                         {value}
-                        <br />
+                        <br/>
                     </div>
                 ));
         }
@@ -85,13 +68,15 @@ const Recipe = () => {
                     </div>
                 </div>);
         } else {
-            return <div className="centerBlock"><div className="loader"></div></div>;
+            return <div className="centerBlock">
+                <div className="loader"></div>
+            </div>;
         }
     }
 
     return (
         <div>
-            <Toolbar />
+            <Toolbar/>
             <br/>
             {getRecipeOrLoader()}
         </div>
