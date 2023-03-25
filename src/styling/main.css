@@ -4,12 +4,12 @@
 }
 
 .whiteNavy {
-    color: #fff!important;
+    color: #fff !important;
     background-color: var(--offWhite);
 }
 
 html, body {
-    font-family: Verdana,sans-serif;
+    font-family: Verdana, sans-serif;
     font-size: 15px;
     line-height: 1.5;
 }
@@ -94,7 +94,7 @@ h2 {
     text-align: center;
     font-family: system-ui;
     padding: 50px 10px 10px 10px;
-    margin:0px;
+    margin: 0px;
 }
 
 /*CSS for Recipe Page*/
@@ -171,7 +171,7 @@ h2 {
     color: #d68c8c;
 }
 
-.recipeTitle>a {
+.recipeTitle > a {
     text-decoration: none;
     color: var(--navyBlue);
 }
@@ -203,13 +203,21 @@ h2 {
 
 /* Safari */
 @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .recipeTitle {
@@ -236,6 +244,14 @@ h2 {
 
 .buttonContainer {
     text-align: right;
+}
+
+.loginButton {
+    background-color: var(--navyBlue);
+    color: var(--offWhite);
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 5px 25px 5px 25px;
 }
 
 html {

@@ -1,4 +1,4 @@
-import {useNavigate, useParams, useSearchParams} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import Toolbar from "./toolbar";
@@ -16,7 +16,6 @@ const SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly';
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const params = useParams();
     let [searchParams, setSearchParams] = useSearchParams();
     const recipes = useSelector((state) => state.recipes);
     const [isLoggedIn, setLoggedIn] = useState(false);
@@ -28,25 +27,16 @@ const LoginPage = () => {
 
     useEffect(() => {
         setLoggedIn(recipes.recipesLoaded);
-        console.log("recipes2 on load is " + recipes.recipesCaleb);
-        console.log("recipes2 on load is " + recipes.recipesLoaded);
     }, [recipes]);
 
 
     useEffect(() => {
         if (!isGAPIInited) {
-            console.log('calling gapi functions once hopefully'); //todo remove
             window.gapi.load('client', initializeGapiClient);
-        }
-        if (!isGISInited) {
-            console.log('calling gis functions once hopefully'); //todo remove
+        } else if (!isGISInited) {
             gisLoaded();
         }
     }, [isGAPIInited, isGISInited]);
-
-    useEffect(() => {
-        console.log("the tokenClient is: ", tokenClient);
-    }, [tokenClient])
 
     /**
      * Callback after the API client is loaded. Loads the
@@ -88,11 +78,9 @@ const LoginPage = () => {
         if (window.gapi.client.getToken() === null) {
             // Prompt the user to select a Google Account and ask for consent to share their data
             // when establishing a new session.
-            console.log("need to grab a token");
             token.requestAccessToken({prompt: 'consent'});
         } else {
             // Skip display of account chooser and consent dialog for an existing session.
-            console.log("already have a token");
             token.requestAccessToken({prompt: ''});
         }
         setLoggedIn(true);
@@ -108,6 +96,7 @@ const LoginPage = () => {
             window.gapi.client.setToken('');
         }
         setLoggedIn(false);
+        dispatch(setRecipes([]));
     };
 
     const saveRecipes = async () => {
@@ -132,7 +121,6 @@ const LoginPage = () => {
         let recipeArr = [];
         let counter = 0;
         for (const value of range.values) {
-            console.log(value);
             recipeArr.push({
                 id: counter++,
                 title: value[0],
@@ -159,11 +147,11 @@ const LoginPage = () => {
             <h1 className='center'>Authenticate With Google</h1>
             {isGAPIInited && isGISInited ?
 
-                <div>
+                <div className={'center'}>
                     {isLoggedIn ? (
-                        <button onClick={logOut}>Logout</button>
+                        <button className={'loginButton'} onClick={logOut}>Logout</button>
                     ) : (
-                        <button onClick={logIn}>Login</button>
+                        <button className={'loginButton'} onClick={logIn}>Login</button>
                     )
                     }
                 </div>

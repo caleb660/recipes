@@ -22,7 +22,6 @@ const Recipe = () => {
     }
 
     const getBrokenString = (arr) => {
-        console.log(arr);
         if (arr !== undefined) {
             return (
                 arr.map(value =>
@@ -35,7 +34,6 @@ const Recipe = () => {
     }
 
     const getRecipeOrLoader = () => {
-        console.log("recipe is: ", recipe);
         if (!recipe) {
             return (
                 <h1 className="recipeHeader error">

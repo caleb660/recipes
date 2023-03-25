@@ -6,13 +6,13 @@ const AddForm = props => {
         <Form
             onSubmit={values => {
                 // send values to the cloud
-                console.log("submitting");
+                console.log("submitting. But not yet implemented");
                 console.log(values);
-                if (values.password === process.env.REACT_APP_ADD_RECIPE_PASSWORD) {
-                    console.log("well submit this");
-                } else {
-                    console.log("you cotton-headed ninny-muggins that's not the right password");
-                }
+//                if (values.password === process.env.REACT_APP_ADD_RECIPE_PASSWORD) {
+//                    console.log("well submit this");
+//                } else {
+//                    console.log("you cotton-headed ninny-muggins that's not the right password");
+//                }
             }}
         >
             {({handleSubmit, pristine, form, submitting}) => (

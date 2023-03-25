@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {BrowserRouter, Route, Routes, useParams} from 'react-router-dom';
+import React from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import AllRecipes from "./components/allRecipes";
 import Recipe from "./components/recipe";
 import Main from "./components/main";
@@ -8,35 +8,25 @@ import LoginPage from "./components/loginPage";
 import {ProtectedRoute} from "./components/protectedRoute";
 import {useSelector} from "react-redux";
 
-//todo list
-//todo everytime you go back to the sign in page it requires you log in again. save that in the state or something
-//probalby the session storage
-//todo after a successful login you should be redirected to the page you were attempting to access
-
 const App = () => {
-    const [isLoggedIn, setLoggedIn] = useState(false);
-    const recipesLoaded = useSelector((state) => state.recipes.recipesLoaded);
-    useEffect(() => {
-        console.log("the recipes are loaded for APP.js? ", recipesLoaded);
-        setLoggedIn(recipesLoaded);
-    }, [recipesLoaded]);
+    let recipesLoaded = useSelector((state) => state.recipes.recipesLoaded);
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" exact element={<Main/>}/>
                 <Route path="/login" exact element={<LoginPage/>}/>
                 <Route path="/recipes" exact element={
-                    <ProtectedRoute isLoggedIn={isLoggedIn} path={''}>
+                    <ProtectedRoute isLoggedIn={recipesLoaded}>
                         <AllRecipes/>
                     </ProtectedRoute>
                 }/>
                 <Route path="/recipes/add" exact element={
-                    <ProtectedRoute isLoggedIn={isLoggedIn} path={'add'}>
+                    <ProtectedRoute isLoggedIn={recipesLoaded} path={'add'}>
                         <AddRecipe/>
                     </ProtectedRoute>
                 }/>
                 <Route path="/recipes/:id" exact element={
-                    <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <ProtectedRoute isLoggedIn={recipesLoaded}>
                         <Recipe/>
                     </ProtectedRoute>
                 }/>

@@ -11,14 +11,14 @@ export default (async function showResults(values) {
         },
         data: values,
     })
-    .then(result => {
-      if (result.data === "success") {
-        window.alert("Your recipe has been successfully saved");
-        window.location.reload();
-      } else if (result.data === "bad password") {
-        window.alert("The password is incorrect");
-      } else {
-        window.alert("Something has went wrong! Please try again.");
-      }
-    });
+        .then(result => {
+            if (result.data === "success") {
+                window.alert("Your recipe has been successfully saved");
+                window.location.reload();
+            } else if (result.data === "bad password") {
+                window.alert("The password is incorrect");
+            } else {
+                window.alert("Something has went wrong! Please try again.");
+            }
+        });
 });
