@@ -8,7 +8,7 @@ const Recipe = () => {
     const recipes = useSelector((state) => state.recipes);
 
     useEffect(() => {
-        let urlParts = window.location.pathname.split('/');
+        let urlParts = window.location.hash.split('/');
         let recipeId = urlParts[urlParts.length - 1];
         let tempRecipe = structuredClone(recipes.recipesCaleb[recipeId]);
         tempRecipe.ingredients = addBreaks(tempRecipe.ingredients);

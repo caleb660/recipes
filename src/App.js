@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 import AllRecipes from "./components/allRecipes";
 import Recipe from "./components/recipe";
 import Main from "./components/main";
@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 const App = () => {
     let recipesLoaded = useSelector((state) => state.recipes.recipesLoaded);
     return (
-        <BrowserRouter>
+        <HashRouter basename={process.env.PUBLIC_URL}>
             <Routes>
                 <Route path="/" exact element={<Main/>}/>
                 <Route path="/login" exact element={<LoginPage/>}/>
@@ -31,7 +31,7 @@ const App = () => {
                     </ProtectedRoute>
                 }/>
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 export default App;
