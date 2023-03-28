@@ -1,10 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import Toolbar from './toolbar';
 import AddForm from './addForm';
-import showResults from "./showResults";
+import {useDispatch} from "react-redux";
+import {setRecipes} from "../redux/recipeSlice";
 
 const AddRecipe = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (window.gapi.client === undefined) {
+            dispatch(setRecipes([]));
+        }
+    }, [window.gapi.client]);
+
     return (
         <div className="addRecipe">
             <Toolbar/>
@@ -13,7 +22,7 @@ const AddRecipe = () => {
             </h2>
             <div className="addForm">
                 <div className="innerForm">
-                    <AddForm onSubmit={showResults}/>
+                    <AddForm/>
                 </div>
             </div>
         </div>

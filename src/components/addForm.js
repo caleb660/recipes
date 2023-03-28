@@ -1,18 +1,51 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Field, Form} from 'react-final-form'
+import {useDispatch} from "react-redux";
+import {setRecipe} from "../redux/recipeSlice";
+
+const makeRequest = async (values) => {
+    const request = {
+        spreadsheetId: '11C_U7Xm2X43oT30uS2T4-T8HcrNLvfW-mYZKuhqEzNg',
+        range: 'recipeServerSpreadsheet!A2:E',
+        valueInputOption: 'USER_ENTERED',
+        insertDataOption: 'INSERT_ROWS',
+        resource: {
+            "majorDimension": "ROWS",
+            "values": [[values.title, values.contributor, values.category, values.ingredients, values.directions]]
+        },
+    };
+
+    try {
+        await window.gapi.client.sheets.spreadsheets.values.append(request);
+        document.getElementById("clearButton").click()
+    } catch (err) {
+        alert("The recipe could not be saved. Try again later");
+        throw "no-save";
+    }
+}
 
 const AddForm = props => {
+    const [isSubmitting, setSubmitting] = useState(false);
+    const dispatch = useDispatch();
+
     return (
         <Form
-            onSubmit={values => {
-                // send values to the cloud
-                console.log("submitting. But not yet implemented");
-                console.log(values);
-//                if (values.password === process.env.REACT_APP_ADD_RECIPE_PASSWORD) {
-//                    console.log("well submit this");
-//                } else {
-//                    console.log("you cotton-headed ninny-muggins that's not the right password");
-//                }
+            onSubmit={async values => {
+                setSubmitting(true);
+                makeRequest(values).then(() => {
+                    let newRecipe = {
+                        title: values.title,
+                        contributor: values.contributor,
+                        category: values.category,
+                        ingredients: values.ingredients,
+                        directions: values.directions,
+                    };
+                    dispatch(setRecipe(newRecipe));
+                }).catch(() => {
+                    console.log("not a successful save");
+                }).finally(() => {
+                    setSubmitting(false);
+                });
             }}
         >
             {({handleSubmit, pristine, form, submitting}) => (
@@ -37,6 +70,7 @@ const AddForm = props => {
                             <Field
                                 autoComplete="off"
                                 name="contributor"
+                                required
                                 component="input"
                                 type="text"
                                 placeholder="Your name here"
@@ -74,22 +108,12 @@ const AddForm = props => {
                         </div>
                     </div>
                     <br/>
-                    <label>Password</label>
-                    <div>
-                        <Field
-                            name="password"
-                            component="input"
-                            type="password"
-                            required
-                        />
-                    </div>
-                    <br/>
                     <div className="buttonContainer">
-                        <button type="submit" disabled={pristine || submitting}>
+                        <button type="submit" disabled={pristine || submitting || isSubmitting}>
                             Submit
                         </button>
                         &nbsp;
-                        <button type="button" disabled={pristine || submitting} onClick={form.reset}>
+                        <button id="clearButton" type="button" onClick={form.reset}>
                             Clear
                         </button>
                     </div>

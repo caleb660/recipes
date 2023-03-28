@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 const App = () => {
     let recipesLoaded = useSelector((state) => state.recipes.recipesLoaded);
     return (
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Routes>
                 <Route path="/" exact element={<Main/>}/>
                 <Route path="/login" exact element={<LoginPage/>}/>

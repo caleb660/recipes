@@ -25,10 +25,16 @@ export const recipeSlice = createSlice({
             }
             sessionStorage.setItem("recipesCaleb", JSON.stringify(action.payload));
         },
+        setRecipe: (state, action) => {
+            let newRecipe = action.payload;
+            newRecipe.id = state.recipesCaleb.length;
+            state.recipesCaleb = [...state.recipesCaleb, newRecipe];
+            sessionStorage.setItem("recipesCaleb", JSON.stringify(state.recipesCaleb));
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {setRecipes} = recipeSlice.actions
+export const {setRecipes, setRecipe} = recipeSlice.actions
 
 export default recipeSlice.reducer
