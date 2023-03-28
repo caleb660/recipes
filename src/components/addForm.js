@@ -15,13 +15,19 @@ const makeRequest = async (values) => {
         },
     };
 
-    try {
-        await window.gapi.client.sheets.spreadsheets.values.append(request);
-        document.getElementById("clearButton").click()
-    } catch (err) {
-        alert("The recipe could not be saved. Try again later");
-        throw "no-save";
-    }
+    window.gapi.client.sheets.spreadsheets.values.append(request)
+        .then(() => {
+            document.getElementById("clearButton").click()
+
+        })
+        .catch((err) => {
+            if (err.status === 403) {
+                alert("You exclusivley have read-only permissions.")
+            } else {
+                alert("The recipe could not be saved. Try again later");
+            }
+            throw "no-save";
+        });
 }
 
 const AddForm = props => {
