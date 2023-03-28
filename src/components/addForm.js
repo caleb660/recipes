@@ -17,12 +17,11 @@ const makeRequest = async (values) => {
 
     window.gapi.client.sheets.spreadsheets.values.append(request)
         .then(() => {
-            document.getElementById("clearButton").click()
-
+            document.getElementById("clearButton").click();
         })
         .catch((err) => {
             if (err.status === 403) {
-                alert("You exclusivley have read-only permissions.")
+                alert("You exclusivley have read-only permissions.");
             } else {
                 alert("The recipe could not be saved. Try again later");
             }
