@@ -70,9 +70,11 @@ const LoginPage = () => {
         let token = tokenClient;
         token.callback = async (resp) => {
             if (resp.error !== undefined) {
+                console.log("welp this blew up");
                 throw (resp);
             }
             await saveRecipes();
+            setLoggedIn(true);
         };
 
         if (window.gapi.client.getToken() === null) {
@@ -83,7 +85,6 @@ const LoginPage = () => {
             // Skip display of account chooser and consent dialog for an existing session.
             token.requestAccessToken({prompt: ''});
         }
-        setLoggedIn(true);
     }
 
     /**
@@ -100,38 +101,35 @@ const LoginPage = () => {
     };
 
     const saveRecipes = async () => {
-        let response;
-        try {
-            // Fetch first 10 files
-            response = await window.gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: '11C_U7Xm2X43oT30uS2T4-T8HcrNLvfW-mYZKuhqEzNg',
-                range: 'recipeServerSpreadsheet!A2:E'
-            });
-        } catch (err) {
-            console.log(err.message);
-            return;
-        }
-        const range = response.result;
-        if (!range || !range.values || range.values.length === 0) {
-            console.log('No values found.');
-            return;
-        }
+        window.gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: '11C_U7Xm2X43oT30uS2T4-T8HcrNLvfW-mYZKuhqEzNg',
+            range: 'recipeServerSpreadsheet!A2:E'
+        })
+            .then((response) => {
+                const range = response.result;
+                if (!range || !range.values || range.values.length === 0) {
+                    console.log('No values found.');
+                    return;
+                }
 
-        // Flatten to string to display
-        let recipeArr = [];
-        let counter = 0;
-        for (const value of range.values) {
-            recipeArr.push({
-                id: counter++,
-                title: value[0],
-                contributor: value[1],
-                category: value[2],
-                ingredients: value[3],
-                directions: value[4]
-            })
-        }
-        dispatch(setRecipes(recipeArr));
-        navigateToIntendedPage();
+                // Flatten to string to display
+                let recipeArr = [];
+                let counter = 0;
+                for (const value of range.values) {
+                    recipeArr.push({
+                        id: counter++,
+                        title: value[0],
+                        contributor: value[1],
+                        category: value[2],
+                        ingredients: value[3],
+                        directions: value[4]
+                    })
+                }
+                dispatch(setRecipes(recipeArr));
+                navigateToIntendedPage();
+            }).catch(() => {
+            alert("You do not have access to the spreadsheet. Ask Caleb for access");
+        })
     };
 
     const navigateToIntendedPage = () => {
